@@ -1,3 +1,5 @@
+> **AI disclosure:** This app, including its code, tests, and documentation, was created entirely by **GPT-6.1 Sol**, guided by human prompts. AI-generated code can contain errors and should be independently reviewed before use.
+
 # PDF Chapter Merger
 
 A local Windows app that combines PDFs into one document, with chapters named after the source filenames.
