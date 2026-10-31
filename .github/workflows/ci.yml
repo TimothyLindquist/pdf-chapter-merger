@@ -1,0 +1,50 @@
+name: Windows CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Windows / Python 3.11
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Download verified wheels and check known advisories
+        run: python -I scripts/fetch_wheels.py --check-advisories
+      - name: Create verified offline environment
+        run: python -I scripts/bootstrap.py
+      - name: Check dependency compatibility
+        run: .venv/Scripts/python.exe -I -m pip --isolated check
+      - name: Run Windows security and merge regressions
+        run: python -I -S scripts/run_tests.py
+      - name: Build candidate offline release
+        run: python -I scripts/build_release.py
+      - name: Smoke-test an extracted offline release
+        run: python -I scripts/smoke_release.py
+      - name: Upload candidate for review
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-offline-bundle
+          path: |
+            dist/*.zip
+            dist/*.sha256
+          if-no-files-found: error
+          retention-days: 7

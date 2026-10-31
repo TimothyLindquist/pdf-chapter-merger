@@ -1,0 +1,33 @@
+# Local environments and generated Python files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Downloads, distributions, audit outputs, and private documents
+/wheelhouse/
+/build/
+/dist/
+/tmp/
+/security-audit/
+*.pdf
+*.zip
+*.whl
+*.download
+.pdfmerger-*.tmp
+
+# Local editor settings and secrets
+.vscode/
+.idea/
+.env
+.env.*
+*.pem
+*.key
+Thumbs.db
+Desktop.ini
+.DS_Store

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools==84.2.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdf-chapter-merger"
+version = "0.1.0"
+description = "A local Windows PDF merger with filename-based chapters and bounded processing."
+readme = "README.md"
+requires-python = "==3.11.*"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "PDF Chapter Merger contributors"}]
+dependencies = ["pypdf==6.21.4"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business",
+]
+
+[project.gui-scripts]
+pdf-chapter-merger = "pdf_chapter_merger.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
